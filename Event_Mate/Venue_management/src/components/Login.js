@@ -3,10 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import logo from "../assets/logo.png"
 
 
+
 const Login = () => {
     const [loginInfo, setLoginInfo] = useState(false);
     const navigate = useNavigate();
     const [info, setInfo] = useState({});
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const handleChange = (event) => {
         console.log("handleChange called");
@@ -21,7 +23,7 @@ const Login = () => {
     const fetchLogin = async(e) => {
     
         try {
-            const response = await fetch("/api/login", {
+            const response = await fetch(`${API_URL}/auth/login`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -49,7 +51,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch("/api/2fa/verify", {
+            const response = await fetch(`${API_URL}/auth/2fa/verify`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -144,7 +146,7 @@ const Login = () => {
                         Click here
                     </Link>
                 </div>
-                
+
                 <p>
                     Don't have an account?{" "}
                     <span className='link' data-testid="toSignin" onClick={gotoSignUpPage}>

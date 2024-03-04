@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png"
 import ReCAPTCHA from "react-google-recaptcha";
+
 const Register = () => {
 
     const [info, setInfo] = useState({});
@@ -9,6 +10,7 @@ const Register = () => {
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const recaptchaRef = React.createRef();
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ const Register = () => {
         e.preventDefault();
 
         try {
-          const response = await fetch("/api/register", {
+          const response = await fetch(`${API_URL}/auth/register`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -51,7 +53,7 @@ const Register = () => {
           console.error("Registration error:", error);
         }
         try {
-            const response = await fetch("/api/login", {
+            const response = await fetch(`${API_URL}/auth/login`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -79,7 +81,7 @@ const Register = () => {
         
         /*
         try {
-            const response = await fetch("/api/2fa/setup", {
+            const response = await fetch(`${API_URL}/auth/2fa/setup`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
