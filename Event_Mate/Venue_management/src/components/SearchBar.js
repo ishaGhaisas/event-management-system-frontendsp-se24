@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./SearchBar.css";
 
-export const SearchBar = () => {
+export const SearchBar = ({ setSearch }) => {
   const [input, setInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const handleChange = (value) => {
     setInput(value);
+    setSearch(value);
     fetchData(value);
   };
-
   const fetchData = async (searchTerm) => {
     try {
       const response = await axios.get(`http://localhost:3001/search?term=${searchTerm}`);

@@ -20,7 +20,6 @@ function App() {
   return (
     <BrowserRouter>
       <NavBar />
-      <SearchBar />
       <Routes>
           <Route path='/homeB' element={<HomeBody />}/>
           <Route path='/' element={<Home />}/>
