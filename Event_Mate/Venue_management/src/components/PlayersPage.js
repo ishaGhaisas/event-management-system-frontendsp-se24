@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PlayerCard from "./PlayerCard";
+import { SearchBar } from "./SearchBar";
 
 function PlayersPage() {
   const [players, setPlayers] = useState([
@@ -111,7 +112,7 @@ function PlayersPage() {
     <div className="PlayersViewHost">
       <div className="PlayersBody">
         <form className='searchForm'>
-          <input className="searchInput" placeholder="Search Players" onChange={(e) => setSearch(e.target.value)} />
+        <SearchBar setSearch={setSearch} />
           <div>
             <label htmlFor="ageRange">Filter by Age Range:{" "}
               <select id="ageRange" onChange={handleAgeRangeChange} value={selectedAgeRange}>
@@ -135,9 +136,11 @@ function PlayersPage() {
           {players
             .filter((item) => {
               return (
-                (search.toLowerCase() === '' || item.gender.toLowerCase().includes(search) ||
+                (search.toLowerCase() === '' ||
+                  item.gender.toLowerCase().includes(search) ||
                   item.sport_activity_name.toLowerCase().includes(search) ||
-                  item.skill_level.toLowerCase().includes(search)) &&
+                  item.skill_level.toLowerCase().includes(search) ||
+                  item.player_name.toLowerCase().includes(search)) &&
                 (selectedAgeRange === '' ||
                   (selectedAgeRange === '18-22' && item.age >= 18 && item.age <= 22) ||
                   (selectedAgeRange === '23-30' && item.age >= 23 && item.age <= 30) ||
