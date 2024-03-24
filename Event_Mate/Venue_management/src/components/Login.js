@@ -81,6 +81,7 @@ const Login = () => {
     
 
     const gotoSignUpPage = () => navigate("/register"); 
+    const gotoForgetPage = () => navigate("/forget")
 
     return (
         
@@ -142,7 +143,7 @@ const Login = () => {
 
                 <div className="forgot">
                     Forgot password?{" "}
-                    <Link to="/forgot-password" className="forgotPasswordLink">
+                    <Link to="/forgot-password" className="forgotPasswordLink" onClick={gotoForgetPage}>
                         Click here
                     </Link>
                 </div>
