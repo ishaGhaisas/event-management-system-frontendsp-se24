@@ -11,6 +11,8 @@ import Home from './components/Home.js'
 import ResetPassword from "./components/ResetPassword.js";
 import PlayersPage from "./components/PlayersPage.js";
 import { SearchBar } from "./components/SearchBar.js";
+import VenueDetails from "./components/venueDetails.js";
+import VenuesTable from "./components/ViewPage.js";
 
 
 
@@ -28,6 +30,8 @@ function App() {
           <Route path='/player-page' element={<PlayersPage />} />
           <Route path='/reset-password' element={<ResetPassword />}/>
           <Route path='/search' element={<SearchBar />} />
+          <Route path='/venues' element={<VenuesTable />}/>
+          <Route path='/venue/venue-details?' element={<VenueDetails />}/>
       </Routes>
     </BrowserRouter>
 
