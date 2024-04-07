@@ -1,74 +1,86 @@
-import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import { Button } from "./Button";
 import './navBar.css';
 
-function NavBar(){
-    const [username, setUsername] = useState();
-    const [loggedIn, setLoggedIn] = useState();
+function NavBar() {
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [username, setUsername] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    
-    const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true);
+    useEffect(() => {
+        // Check if user is logged in using local storage
+        const storedUsername = window.localStorage.getItem('username');
+        if (storedUsername) {
+            setUsername(storedUsername);
+            setLoggedIn(true);
+        } else {
+            setUsername('');
+            setLoggedIn(false);
+        }
+    }, []);
 
-    const handleClick = () => setClick(!click);
-    const closeMobileMenu = () => setClick(false);
+    useEffect(() => {
+        // Extract username from query parameter
+        const searchParams = new URLSearchParams(location.search);
+        const usernameParam = searchParams.get('username');
+        if (usernameParam) {
+            setUsername(usernameParam);
+            setLoggedIn(true); // Update loggedIn state when username is present in URL
+        }
+    }, [location]);
 
+    const handleLogout = () => {
+        // Clear local storage
+        window.localStorage.removeItem('username');
+        // Update state
+        setUsername('');
+        setLoggedIn(false);
+        // Redirect to login page
+        navigate("/login");
+    };
 
-
-
-
-    return(
-    <>
+    return (
         <nav className="navBar">
             <div className="navBarContainer">
-                <Link to='/' className="navBarLogo" onClick={closeMobileMenu}>
-                    <img src={logo }width={146.85} height={55} alt='Logo'></img>
+                <Link to='/' className="navBarLogo">
+                    <img src={logo} width={146.85} height={55} alt='Logo' />
                 </Link>
-                <div className="menuIcon" onClick={handleClick}>
-                    <i className={click ? "bx bx-x" : "bx bx-menu"}/>
-                </div>
-                <ul className={click ? "navMenuActive" : "navMenu"}>
+                <ul className="navMenu">
                     <li className="navItem">
-                        <Link to="/" className="navLinks" onClick={closeMobileMenu}>
+                        <Link to="/" className="navLinks">
                             Home
                         </Link>
                     </li>
                     <li className="navItem">
-                        <Link to="/venues" className="navLinks" onClick={closeMobileMenu}>
+                        <Link to="/venues" className="navLinks">
                             Venues/Activities
                         </Link>
                     </li>
                     <li className="navItem">
-                        <Link to="/player-page" className="navLinks" onClick={closeMobileMenu}>
+                        <Link to="/player-page" className="navLinks">
                             Players
                         </Link>
                     </li>
-                    
-                    <li className="navItem">
-                        
-                        <Link to="/login" className="navLinksMobile" onClick={closeMobileMenu}>
-                            LOGIN
-                        </Link>
-                        
-                    </li>
                 </ul>
                 <ul className="userPage">
-                    {loggedIn ? 
-                        <Link to="/user-page">
-                            {button && <Button buttonStyle='button'>{username}</Button>}
-                        </Link>
-                        :
-                        <Link to="/login">
-                            {button && <Button buttonStyle='button'>LOGIN</Button>}
-                        </Link>}
-                    
+                    {loggedIn ? (
+                        <li>
+                            <Button buttonStyle='button' onClick={handleLogout}>Logout ({username})</Button>
+                        </li>
+                    ) : (
+                        <li>
+                            <Link to="/login">
+                                <Button buttonStyle='button'>Login</Button>
+                            </Link>
+                        </li>
+                    )}
                 </ul>
             </div>
         </nav>
-    </>
     );
 }
 
-export default NavBar
+export default NavBar;
