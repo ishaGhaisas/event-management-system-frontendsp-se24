@@ -6,6 +6,8 @@ import basketball from "../assets/basketball.png";
 import soccer from "../assets/soccer.png";
 import football from "../assets/football.png";
 import sports from "../assets/sports.png";
+import './venueDetails.css';
+
 
 const VenueDetails = () => {
   const [venueName, setVenueName] = useState("Venue");
@@ -31,6 +33,22 @@ const VenueDetails = () => {
     }
   ]);
   const [search, setSearch] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState(null);
+
+  const handleBookIt = () => {
+    const bookingInfo = {
+      venueName,
+      venueAddress,
+      venueSport,
+    };
+    setBookingDetails(bookingInfo);
+    setShowConfirmation(true);
+  };
+
+  const handleViewConfirmation = () => {
+    setShowConfirmation(false);
+  };  
 
   const handleBookmarkButtonClick = () => {
     alert("Bookmark functionality");
@@ -101,7 +119,7 @@ const VenueDetails = () => {
             </div>
           </div>
           <div className='detail'>
-            <Button> Book It! </Button>
+            <Button onClick={handleBookIt}> Book It! </Button>
           </div>
           <img src={mapURL} className="mapImg"></img>
         </div>
@@ -131,6 +149,18 @@ const VenueDetails = () => {
             ))}
         </div>
       </SplitLayout>
+      {showConfirmation && (
+        <div className="confirmationPopup">
+          <h2>Booking Confirmed!</h2>
+          <p>Venue: {bookingDetails?.venueName}</p>
+          <p>Address: {bookingDetails?.venueAddress}</p>
+          <p>Sport: {bookingDetails?.venueSport}</p>
+          <div>
+            <Button onClick={handleViewConfirmation}>View Confirmation</Button>
+            <Button onClick={() => setShowConfirmation(false)}>Close</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
