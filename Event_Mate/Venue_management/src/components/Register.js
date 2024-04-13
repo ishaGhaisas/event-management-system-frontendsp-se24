@@ -39,8 +39,8 @@ const Register = () => {
             });
     
             if (response.ok) {
-                const data = await response.json();
-                console.log("Registration successful:", data);
+                // const data = await response.json();
+                console.log("Registration successful:");
                 setSuccessMessage("Registration successful. Redirecting to the Login page...");
                 setShowSuccessMessage(true);
     

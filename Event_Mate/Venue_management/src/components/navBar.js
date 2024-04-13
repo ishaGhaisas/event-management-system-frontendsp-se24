@@ -21,6 +21,7 @@ function NavBar() {
             setLoggedIn(false);
         }
     }, []);
+    
 
     useEffect(() => {
         // Extract username from query parameter
@@ -41,6 +42,7 @@ function NavBar() {
         // Redirect to login page
         navigate("/login");
     };
+    
 
     return (
         <nav className="navBar">
@@ -66,17 +68,18 @@ function NavBar() {
                     </li>
                 </ul>
                 <ul className="userPage">
-                    {loggedIn ? (
-                        <li>
-                            <Button buttonStyle='button' onClick={handleLogout}>Logout ({username})</Button>
-                        </li>
-                    ) : (
-                        <li>
-                            <Link to="/login">
-                                <Button buttonStyle='button'>Login</Button>
-                            </Link>
-                        </li>
-                    )}
+                {loggedIn ? (
+    <li>
+        <Button buttonStyle='button' onClick={handleLogout}>Logout</Button>
+    </li>
+) : (
+    <li>
+        <Link to="/login">
+            <Button buttonStyle='button'>Login</Button>
+        </Link>
+    </li>
+)}
+
                 </ul>
             </div>
         </nav>

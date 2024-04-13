@@ -1,83 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { Button } from './Button';
 
 function VenuesTable() {
-  const [venues, setVenues] = useState([
-    {
-      venue_id: 1,
-      vname: "Central Park Basketball Court",
-      address: "Central Park, New York, NY 10024",
-      sport: "Basketball",
-      bookmark: 1
-    },
-    {
-      venue_id: 2,
-      vname: "Staples Center",
-      address: "1111 S Figueroa St, Los Angeles, CA 90015",
-      sport: "Basketball",
-      bookmark: 0
-    },
-    {
-      venue_id: 3,
-      vname: "Wembley Stadium",
-      address: "Wembley, London HA9 0WS, United Kingdom",
-      sport: "Football",
-      bookmark: 1
-    },
-    {
-      venue_id: 4,
-      vname: "Camp Nou",
-      address: "C. d'Aristides Maillol, 12, 08028 Barcelona, Spain",
-      sport: "Football",
-      bookmark: 0
-    },
-    {
-      venue_id: 5,
-      vname: "Suncorp Stadium",
-      address: "40 Castlemaine St, Milton QLD 4064, Australia",
-      sport: "Rugby",
-      bookmark: 1
-    },
-    {
-      venue_id: 6,
-      vname: "AT&T Stadium",
-      address: "1 AT&T Way, Arlington, TX 76011, United States",
-      sport: "American Football",
-      bookmark: 0
-    },
-    {
-      venue_id: 7,
-      vname: "Melbourne Cricket Ground",
-      address: "Brunton Ave, Richmond VIC 3002, Australia",
-      sport: "Cricket",
-      bookmark: 1
-    },
-    {
-      venue_id: 8,
-      vname: "Yankee Stadium",
-      address: "1 E 161st St, The Bronx, NY 10451, United States",
-      sport: "Baseball",
-      bookmark: 0
-    },
-  ]);
+  const [venues, setVenues] = useState([]);
   const [isBookmarkChecked, setIsBookmarkChecked] = useState(false);
   const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL;
 
-  const handleCardClick = (venueId, sport) => {
-    console.log('Clicked Card with ID:', venueId);
-    navigate(`/venue/venue-details?venueid=${venueId}&sport=${sport}`);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/venue-list`);
+      console.log(response.data)
+      setVenues(response.data);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   };
-  
-  // const handleCardClick = (venueId) => {
-    // console.log('Clicked Card with ID:', venueId);
-    // navigate(`/venue/venue-details?venueid=${venueId}`);
-  // };
+
+  const handleCardClick = (venueId) => {
+    console.log('Clicked Card with ID:', venueId);
+    navigate(`/venue/venue-details?venueid=${venueId}`);
+  };
 
   const handleBookmarkChange = (e) => {
     setIsBookmarkChecked(e.target.checked);
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const [search, setSearch] = useState('');
 
@@ -85,10 +39,10 @@ function VenuesTable() {
     <div className='venueViewHost'>
       <div className='ViewPageBody'>
         <form className='searchForm'>
-          <input className="searchInput" placeholder="Search Venues or Activities" onChange={(e) => setSearch(e.target.value)} />
+          <input className="searchInput" placeholder="Search Venues or Activities" onChange={(e) => setSearch(e.target.value)}/>
           <div className='bookmarkCheckbox'>
             <label>
-              Bookmarked: {" "}
+              Bookmarked: {" "} 
               <input className="checkbox" type="checkbox" checked={isBookmarkChecked} onChange={handleBookmarkChange} />
             </label>
           </div>
@@ -96,7 +50,7 @@ function VenuesTable() {
         <div className='theVenues'>
           {venues.filter((item) => {
             const matchesSearch = (
-              item.vname.toLowerCase().includes(search) ||
+              item.v_name.toLowerCase().includes(search) ||
               item.sport.toLowerCase().includes(search) ||
               item.address.toLowerCase().includes(search)
             );
@@ -108,17 +62,17 @@ function VenuesTable() {
 
             return matchesSearch && matchesBookmark;
           })
-            .map((venue) => (
-              <Card
-                key={venue.venue_id}
-                id={venue.venue_id}
-                vname={venue.vname}
-                address={venue.address}
-                sport={venue.sport}
-                bookmark={venue.bookmark}
-                onClick={() => handleCardClick(venue.venue_id)}
-              />
-            ))}
+          .map((venue) => (
+            <Card
+              key={venue.venue_id}
+              id={venue.venue_id}
+              vname={venue.v_name}
+              address={venue.address}
+              sport={venue.sport}
+              bookmark = {venue.bookmark}
+              onClick={() => handleCardClick(venue.venue_id)}
+            />
+          ))}
         </div>
       </div>
     </div>
