@@ -10,6 +10,7 @@ const Paymethod = () => {
     const venueId = paymentParams.get('venueid');
     const startTime = paymentParams.get("startTime");
     const endTime = paymentParams.get("endTime");
+    const [message, setMessage] = useState('');
     const date = paymentParams.get('date');
     const [info, setInfo] = useState({});
     const navigate = useNavigate();
@@ -44,6 +45,7 @@ const Paymethod = () => {
             window.location.reload();
         }else{
             const errorData = await response.json();
+             setMessage(errorData.message); 
             console.error("payment Failed:", errorData);
         }
         }catch(error){
@@ -114,6 +116,7 @@ const Paymethod = () => {
                     <Button className ="signupBtn" onClick={handleSubmit}>
                         Submit
                     </Button>
+                  {message && <p className="error-message">{message}</p>} {/* Display error message if exists */}
             </form>
         </div>
         </div>

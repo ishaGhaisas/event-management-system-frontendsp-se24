@@ -69,7 +69,7 @@ const VenueDetails = () => {
       setVenueName(venueData.v_name);
       setVenueSport(venueData.sport);
       setVenueAddress(venueData.address);
-      setClosed(parseInt(venueData.closed) === 1)
+      setClosed(venueData.closed);
       setVenueUserId(venueData.user_id);
       const sportType = venueData.sport.toLowerCase();
       /*
@@ -204,10 +204,10 @@ const VenueDetails = () => {
               </div>
               }
             </div>
-            
+            {!closed && 
             <div className='detail'>
                 <Button onClick={() => handleBookButtonClick()}> Book It! </Button>
-            </div>
+            </div>}
           </div>
           {
               <div className="ChildLeft">
