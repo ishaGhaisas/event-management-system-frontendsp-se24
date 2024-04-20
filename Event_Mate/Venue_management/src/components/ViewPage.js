@@ -64,13 +64,13 @@ function VenuesTable() {
           })
           .map((venue) => (
             <Card
-              key={venue.venue_id}
-              id={venue.venue_id}
+              key={venue._id}
+              id={venue._id}
               vname={venue.v_name}
               address={venue.address}
               sport={venue.sport}
-              bookmark = {venue.bookmark}
-              onClick={() => handleCardClick(venue.venue_id)}
+              bookmark = {venue.bookmarks?.length}
+              onClick={() => handleCardClick(venue._id)}
             />
           ))}
         </div>

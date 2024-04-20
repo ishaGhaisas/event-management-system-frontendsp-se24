@@ -14,6 +14,8 @@ import PlayersPage from "./components/PlayersPage.js";
 import { SearchBar } from "./components/SearchBar.js";
 import VenueDetails from "./components/venueDetails.js";
 import VenuesTable from "./components/ViewPage.js";
+import ReviewBooking from "./components/reviewBooking.js";
+import Paymethod from "./components/Payment.js";
 
 
 
@@ -33,6 +35,8 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path='/search' element={<SearchBar />} />
           <Route path='/venues' element={<VenuesTable />}/>
+          <Route path='/review-booking?' element={<ReviewBooking />}/>
+          <Route path='/payment' element={<Paymethod />}/>
           <Route path='/venue/venue-details?' element={<VenueDetails />}/>
       </Routes>
     </BrowserRouter>

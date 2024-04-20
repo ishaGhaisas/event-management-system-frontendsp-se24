@@ -35,6 +35,9 @@ const Login = () => {
                 if (data.status === "pending") {
                     console.log(info)
                     window.localStorage.setItem('username', info.email);
+                    window.localStorage.setItem('userId', data.data.userId);
+                    
+                    setInfo({...info, userId: data.data.userId});
                     setLoginInfo(true); // Show OTP input  
                 }
             } else {
@@ -52,7 +55,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${API_URL}/auth/login`, {
+            const response = await fetch(`${API_URL}/auth/verify`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,6 +67,7 @@ const Login = () => {
             if (response.status === 200) {
                 const data = await response.json();
                 console.log("2fa verify successful:", data);
+                window.localStorage.setItem('token', data.token);
                 navigate("/");
                 window.location.reload();
             } else {
