@@ -152,15 +152,19 @@
 // }
 // export default HomeBody;
 
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect  } from "react";
+import { Link,useNavigate } from "react-router-dom";
 import img from "../assets/HomeImage.jpg";
 import bgimg from "../assets/backgroundImage.jpg";
 import { Button } from "./Button";
-import axios from 'axios';
+import './homeBody.css';
 import ReservationsCard from "./ReservationsCard";
+import axios from 'axios';
+import UserCard from "./UserCard";
+
 
 const HomeBody = () => {
+     const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [reservations, setReservations] = useState([]);
     const userId = window.localStorage.getItem("userId");
@@ -175,6 +179,16 @@ const HomeBody = () => {
             console.error('Error fetching reservations:', error.message);
         }
     };
+
+  // state variable to store the profile data
+    const [profileData, setProfileData] = useState(
+        {
+          user_id: window.localStorage.getItem('userId') || "",
+          username: window.localStorage.getItem('username') || "",
+          email: window.localStorage.getItem('email') || "",
+          role: window.localStorage.getItem('role') || ""
+        }
+      );
 
     useEffect(() => {
         fetchReservations();
@@ -192,6 +206,10 @@ const HomeBody = () => {
                         </Button>
                     </Link>
                 </div>
+
+                {userId != null &&<div className="profileContainer">
+                  <UserCard/>
+                </div>}
 
                 {userId && (
                     <div className="ChildLeft">
