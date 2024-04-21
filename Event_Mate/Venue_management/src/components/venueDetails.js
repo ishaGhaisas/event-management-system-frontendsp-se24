@@ -138,21 +138,22 @@ const VenueDetails = () => {
         alert("Please login to bookmark the venue!");
       }else{
         console.log(id);
-        const response = await fetch(`/api/bookmark`,{
+        const response = await fetch(`${API_URL}/bookmark-venue/`,{
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json",
-                      "Authorization": window.localStorage.getItem("token"),
+                      // "Authorization": window.localStorage.getItem("token"),
                   },
                   body: JSON.stringify({ venueId: id}),
         });
         console.log(response);
-        if(response.ok){
+        if(response.status === 200){
           alert("Successfully bookmarked your Venue");
         }else if(response.statusText == "Unauthorized"){
           alert("Session Time out. Please login to continue");
           handleSignout();
         }else{
+          console.log(response)
           alert("Unable to bookmark your Venue at this time. Please try later!")
         }
     }
