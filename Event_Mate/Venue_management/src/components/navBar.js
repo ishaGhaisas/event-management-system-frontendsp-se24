@@ -43,7 +43,10 @@ function NavBar() {
         navigate("/login");
     };
     
-
+    const move =()=>{
+        navigate("/ownerview")
+    }
+    
     return (
         <nav className="navBar">
             <div className="navBarContainer">
@@ -66,7 +69,19 @@ function NavBar() {
                             Players
                         </Link>
                     </li>
+
+                    <li className="navItem">
+                       {/* { console.log(localStorage.getItem("role"))} */}
+                    {window.localStorage.getItem("role") === "Organizer" || window.localStorage.getItem("role") === "Admin" ? 
+                        <Link to="/OwnerView" className="navLinks" onClick={move}>
+                            Owner
+                        </Link>
+                        : <div></div>
+                    }
+                    </li>
                 </ul>
+
+        
                 <ul className="userPage">
                 {loggedIn ? (
     <li>
