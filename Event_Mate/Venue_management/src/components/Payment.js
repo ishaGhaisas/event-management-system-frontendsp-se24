@@ -37,6 +37,7 @@ const Paymethod = () => {
             },
             body: JSON.stringify({venueId, startTime, endTime, bookDate: date}),
         });
+        console.log(response); 
         if(response.ok){
             const data = await response.json();
             console.log("payment successful:", data)
