@@ -52,6 +52,10 @@ const HomeBody = () => {
                         </Button>
                     </Link>
                 </div>
+
+                {userId != null &&<div className="profileContainer">
+                  <UserCard/>
+                </div>}
                 
                 {userId && (
                     <div className="ChildLeft">
