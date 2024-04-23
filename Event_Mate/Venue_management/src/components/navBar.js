@@ -36,6 +36,8 @@ function NavBar() {
     const handleLogout = () => {
         // Clear local storage
         window.localStorage.removeItem('username');
+
+        
         // Update state
         setUsername('');
         setLoggedIn(false);
@@ -46,7 +48,7 @@ function NavBar() {
     const move =()=>{
         navigate("/ownerview")
     }
-    
+    console.log(window.localStorage.getItem("role"))
     return (
         <nav className="navBar">
             <div className="navBarContainer">
@@ -78,6 +80,7 @@ function NavBar() {
                         </Link>
                         : <div></div>
                     }
+
                     </li>
                 </ul>
 
